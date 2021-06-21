@@ -223,13 +223,18 @@ int decodingFileReader_init(DecodingFileReader *s, FILE *in) {
     specified_encoding[0] = 0;
     while(step != 2 || octet != '0') {
         octet = nextUTF8byte(s);
-        if (octet == -1) 
+        if (octet == -1) {
+            fprintf(stderr, "GEDCOM file ended while still inside HEAD\n");
             return 1; // not GEDCOM: file ended inside HEAD
+        }
         switch(step) {
             case 0: {
                 if (isspace(octet)) {}
                 else if (octet == '0') { step = 1; }
-                else { return 2; } // not GEDCOM: not start with 0 HEAD
+                else {
+                    fprintf(stderr, "GEDCOM file began with U+%04X '%c', not with '0'\n", octet, octet);
+                    return 2; 
+                }
             } break;
             case 1: {
                 if (octet == '\n' || octet == '\r') step = 2;

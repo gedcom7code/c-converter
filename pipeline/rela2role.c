@@ -58,7 +58,7 @@ void ged_rela2role(GedEvent *event, GedEmitterTemplate *emitter, void *rawstate)
             enumerated = "OTHER";
         
         emitter->emit(emitter, (GedEvent){GED_TEXT, 0, .data=enumerated});
-        if (strcasecmp(enumerated, event->data)) {
+        if (ged_few_phrases ? !strcasecmp(enumerated, "OTHER") : strcasecmp(enumerated, event->data)) {
             emitter->emit(emitter, (GedEvent){GED_START, 0, .data="PHRASE"});
             emitter->emit(emitter, *event);
             emitter->emit(emitter, (GedEvent){GED_END, 0, .data=0});

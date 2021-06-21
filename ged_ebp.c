@@ -222,42 +222,6 @@ void ged551to700(FILE *from, FILE *to) {
 
 
 
-/**
- * Simple command-line wrapper.
- * Run with no arguments to see documentation.
- */
-int main(int argc, char *argv[]) {
-    if ((argc > 1 && argv[1][0] == '-') || (argc > 2 && argv[2][0] == '-')) {
-        fprintf(stderr, "USAGE:\n"
-            "%s\n"
-            "    reads from stdin, writes to stdout\n"
-            "%s infile.ged\n"
-            "    reads from infile.ged, writes to stdout\n"
-            "%s infile.ged outfile.ged\n"
-            "    reads from infile.ged, creates and writes to outfile.ged\n", 
-            argv[0],argv[0],argv[0]);
-        return 1;
-    }
-    
-    FILE *in = stdin;
-    if (argc > 1) in = fopen(argv[1], "rb");
-    if (!in) {
-        fprintf(stderr, "ERROR: unable to open %s\n", argv[1]);
-        return 2;
-    }
-    
-    FILE *out = stdout;
-    if (argc > 2) out = fopen(argv[2], "wxb");
-    if (!out) {
-        fprintf(stderr, "ERROR: unable to create %s\n", argv[2]);
-        return 3;
-    }
-
-    ged551to700(in, out);
-    return 0;
-}
-
-
 /** a helper for changing data */
 void changePayloadToConst(GedEvent *e, const char *val) {
     if (GED_OWNS_DATA & (e->flags)) {
@@ -273,3 +237,10 @@ void changePayloadToDynamic(GedEvent *e, char *val) {
     e->flags |= GED_OWNS_DATA;
     e->data = val;
 }
+
+
+
+/** Global flag; if nonzero, omit PHRASE when creating ENUMs */
+int ged_few_phrases;
+/** Global flag; if nonzero, compare xrefs case-insensitively */
+int ged_xref_case_insensitive;

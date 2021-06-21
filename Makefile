@@ -1,6 +1,6 @@
 CC := clang -O2 -pedantic -Wall -Werror
 PIPELINE_C := $(wildcard pipeline/*.c)
-OBJECTS := ansel2utf8.o ged_ebp.o ged_ebp_parse.o ged_ebp_emit.o strtrie.o geddate.o gedage.o
+OBJECTS := commandline.o ansel2utf8.o ged_ebp.o ged_ebp_parse.o ged_ebp_emit.o strtrie.o geddate.o gedage.o
 
 .PHONY: all clean distclean
 

@@ -75,7 +75,8 @@ Edit `Makefile` as needed; likely changes include
 
 Then run `make`.
 
-To run, execute the resulting `ged5to7`. It accepts 5.5.1 .ged files from stdin or the command line and outputs them in 7.0 (or as much of that as is yet implemented). See the comments in the code for more.
+To run, execute the resulting `ged5to7`.
+Run `ged5to7 --help` for a list of command-line options.
 
 # Design Notes
 
