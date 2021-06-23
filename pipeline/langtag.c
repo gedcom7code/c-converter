@@ -18,12 +18,21 @@ struct ged_langtagstate {
     int inLANG;
 };
 
+static void make_lower_case(char *c) {
+    while(*c) {
+        if (*c >= 'A' && *c <= 'Z')
+            *c ^= ('A'^'a');
+        c+=1;
+    }
+}
+
 void ged_langtag(GedEvent *event, GedEmitterTemplate *emitter, void *rawstate) {
     struct ged_langtagstate *state = (struct ged_langtagstate *)rawstate;
     
     if (event->type == GED_START)
         state->inLANG = !strcmp("LANG", event->data);
     if (state->inLANG && event->type == GED_TEXT) {
+        make_lower_case(event->data);
         const char *bcp47 = trie_get(&state->lookup, event->data);
         if (bcp47) {
             ged_destroy_event(event);
@@ -57,92 +66,92 @@ void ged_langtag(GedEvent *event, GedEmitterTemplate *emitter, void *rawstate) {
 
 void *ged_langtagstate_maker() { 
     struct ged_langtagstate *ans = calloc(1, sizeof(struct ged_langtagstate));
-    trie_put(&ans->lookup, "Afrikaans", "af");
-    trie_put(&ans->lookup, "Albanian", "sq");
-    trie_put(&ans->lookup, "Amharic", "am");
-    trie_put(&ans->lookup, "Anglo-Saxon", "ang");
-    trie_put(&ans->lookup, "Arabic", "ar");
-    trie_put(&ans->lookup, "Armenian", "hy");
-    trie_put(&ans->lookup, "Assamese", "as");
-    trie_put(&ans->lookup, "Belorusian", "be");
-    trie_put(&ans->lookup, "Bengali", "bn");
-    trie_put(&ans->lookup, "Braj", "bra");
-    trie_put(&ans->lookup, "Bulgarian", "bg");
-    trie_put(&ans->lookup, "Burmese", "my");
-    trie_put(&ans->lookup, "Cantonese", "yue"); // or zh-yue
-    trie_put(&ans->lookup, "Catalan", "ca");
-    trie_put(&ans->lookup, "Catalan_Spn", "ca-ES"); // not a language?
-    trie_put(&ans->lookup, "Church-Slavic", "cu");
-    trie_put(&ans->lookup, "Czech", "cs");
-    trie_put(&ans->lookup, "Danish", "da");
-    trie_put(&ans->lookup, "Dogri", "dgr");
-    trie_put(&ans->lookup, "Dutch", "nl");
-    trie_put(&ans->lookup, "English", "en");
-    trie_put(&ans->lookup, "Esperanto", "eo");
-    trie_put(&ans->lookup, "Estonian", "et");
-    trie_put(&ans->lookup, "Faroese", "fo");
-    trie_put(&ans->lookup, "Finnish", "fi");
-    trie_put(&ans->lookup, "French", "fr");
-    trie_put(&ans->lookup, "Georgian", "ka");
-    trie_put(&ans->lookup, "German", "de");
-    trie_put(&ans->lookup, "Greek", "el");
-    trie_put(&ans->lookup, "Gujarati", "gu");
-    trie_put(&ans->lookup, "Hawaiian", "haw");
-    trie_put(&ans->lookup, "Hebrew", "be");
-    trie_put(&ans->lookup, "Hindi", "hi");
-    trie_put(&ans->lookup, "Hungarian", "hu");
-    trie_put(&ans->lookup, "Icelandic", "is");
-    trie_put(&ans->lookup, "Indonesian", "id");
-    trie_put(&ans->lookup, "Italian", "it");
-    trie_put(&ans->lookup, "Japanese", "ja");
-    trie_put(&ans->lookup, "Kannada", "kn");
-    trie_put(&ans->lookup, "Khmer", "km");
-    trie_put(&ans->lookup, "Konkani", "kok");
-    trie_put(&ans->lookup, "Korean", "ko");
-    trie_put(&ans->lookup, "Lahnda", "lah");
-    trie_put(&ans->lookup, "Lao", "lo");
-    trie_put(&ans->lookup, "Latvian", "lv");
-    trie_put(&ans->lookup, "Lithuanian", "lt");
-    trie_put(&ans->lookup, "Macedonian", "mk");
-    trie_put(&ans->lookup, "Maithili", "mai");
-    trie_put(&ans->lookup, "Malayalam", "ml");
-    trie_put(&ans->lookup, "Mandrin", "cmn"); // or zh-cmn
-    trie_put(&ans->lookup, "Manipuri", "mni");
-    trie_put(&ans->lookup, "Marathi", "mr");
-    trie_put(&ans->lookup, "Mewari", "mtr");
-    trie_put(&ans->lookup, "Navaho", "nv");
-    trie_put(&ans->lookup, "Nepali", "ne");
-    trie_put(&ans->lookup, "Norwegian", "no"); // or nb nn, rmg
-    trie_put(&ans->lookup, "Oriya", "or");
-    trie_put(&ans->lookup, "Pahari", "him"); // or bfz, kfx, mjt, mkb, phr
-    trie_put(&ans->lookup, "Pali", "pi");
-    trie_put(&ans->lookup, "Panjabi", "pa");
-    trie_put(&ans->lookup, "Persian", "fa");
-    trie_put(&ans->lookup, "Polish", "pl");
-    trie_put(&ans->lookup, "Portuguese", "pt");
-    trie_put(&ans->lookup, "Prakrit", "pra");
-    trie_put(&ans->lookup, "Pusto", "ps");
-    trie_put(&ans->lookup, "Rajasthani", "raj");
-    trie_put(&ans->lookup, "Romanian", "ro");
-    trie_put(&ans->lookup, "Russian", "ru");
-    trie_put(&ans->lookup, "Sanskrit", "sa");
-    trie_put(&ans->lookup, "Serb", "sr");
-    trie_put(&ans->lookup, "Serbo_Croa", "sh"); // or bs, hr, sr, cnr
-    trie_put(&ans->lookup, "Slovak", "sk");
-    trie_put(&ans->lookup, "Slovene", "sl");
-    trie_put(&ans->lookup, "Spanish", "es");
-    trie_put(&ans->lookup, "Swedish", "sv");
-    trie_put(&ans->lookup, "Tagalog", "tl");
-    trie_put(&ans->lookup, "Tamil", "ta");
-    trie_put(&ans->lookup, "Telugu", "te");
-    trie_put(&ans->lookup, "Thai", "th");
-    trie_put(&ans->lookup, "Tibetan", "bo");
-    trie_put(&ans->lookup, "Turkish", "tr");
-    trie_put(&ans->lookup, "Ukrainian", "uk");
-    trie_put(&ans->lookup, "Urdu", "ur");
-    trie_put(&ans->lookup, "Vietnamese", "vi");
-    trie_put(&ans->lookup, "Wendic", "wen");
-    trie_put(&ans->lookup, "Yiddish", "yi");
+    trie_put(&ans->lookup, "afrikaans", "af");
+    trie_put(&ans->lookup, "albanian", "sq");
+    trie_put(&ans->lookup, "amharic", "am");
+    trie_put(&ans->lookup, "anglo-saxon", "ang");
+    trie_put(&ans->lookup, "arabic", "ar");
+    trie_put(&ans->lookup, "armenian", "hy");
+    trie_put(&ans->lookup, "assamese", "as");
+    trie_put(&ans->lookup, "belorusian", "be");
+    trie_put(&ans->lookup, "bengali", "bn");
+    trie_put(&ans->lookup, "braj", "bra");
+    trie_put(&ans->lookup, "bulgarian", "bg");
+    trie_put(&ans->lookup, "burmese", "my");
+    trie_put(&ans->lookup, "cantonese", "yue"); // or zh-yue
+    trie_put(&ans->lookup, "catalan", "ca");
+    trie_put(&ans->lookup, "catalan_spn", "ca-es"); // not a language?
+    trie_put(&ans->lookup, "church-slavic", "cu");
+    trie_put(&ans->lookup, "czech", "cs");
+    trie_put(&ans->lookup, "danish", "da");
+    trie_put(&ans->lookup, "dogri", "dgr");
+    trie_put(&ans->lookup, "dutch", "nl");
+    trie_put(&ans->lookup, "english", "en");
+    trie_put(&ans->lookup, "esperanto", "eo");
+    trie_put(&ans->lookup, "estonian", "et");
+    trie_put(&ans->lookup, "faroese", "fo");
+    trie_put(&ans->lookup, "finnish", "fi");
+    trie_put(&ans->lookup, "french", "fr");
+    trie_put(&ans->lookup, "georgian", "ka");
+    trie_put(&ans->lookup, "german", "de");
+    trie_put(&ans->lookup, "greek", "el");
+    trie_put(&ans->lookup, "gujarati", "gu");
+    trie_put(&ans->lookup, "hawaiian", "haw");
+    trie_put(&ans->lookup, "hebrew", "be");
+    trie_put(&ans->lookup, "hindi", "hi");
+    trie_put(&ans->lookup, "hungarian", "hu");
+    trie_put(&ans->lookup, "icelandic", "is");
+    trie_put(&ans->lookup, "indonesian", "id");
+    trie_put(&ans->lookup, "italian", "it");
+    trie_put(&ans->lookup, "japanese", "ja");
+    trie_put(&ans->lookup, "kannada", "kn");
+    trie_put(&ans->lookup, "khmer", "km");
+    trie_put(&ans->lookup, "konkani", "kok");
+    trie_put(&ans->lookup, "korean", "ko");
+    trie_put(&ans->lookup, "lahnda", "lah");
+    trie_put(&ans->lookup, "lao", "lo");
+    trie_put(&ans->lookup, "latvian", "lv");
+    trie_put(&ans->lookup, "lithuanian", "lt");
+    trie_put(&ans->lookup, "macedonian", "mk");
+    trie_put(&ans->lookup, "maithili", "mai");
+    trie_put(&ans->lookup, "malayalam", "ml");
+    trie_put(&ans->lookup, "mandrin", "cmn"); // or zh-cmn
+    trie_put(&ans->lookup, "manipuri", "mni");
+    trie_put(&ans->lookup, "marathi", "mr");
+    trie_put(&ans->lookup, "mewari", "mtr");
+    trie_put(&ans->lookup, "navaho", "nv");
+    trie_put(&ans->lookup, "nepali", "ne");
+    trie_put(&ans->lookup, "norwegian", "no"); // or nb nn, rmg
+    trie_put(&ans->lookup, "oriya", "or");
+    trie_put(&ans->lookup, "pahari", "him"); // or bfz, kfx, mjt, mkb, phr
+    trie_put(&ans->lookup, "pali", "pi");
+    trie_put(&ans->lookup, "panjabi", "pa");
+    trie_put(&ans->lookup, "persian", "fa");
+    trie_put(&ans->lookup, "polish", "pl");
+    trie_put(&ans->lookup, "portuguese", "pt");
+    trie_put(&ans->lookup, "prakrit", "pra");
+    trie_put(&ans->lookup, "pusto", "ps");
+    trie_put(&ans->lookup, "rajasthani", "raj");
+    trie_put(&ans->lookup, "romanian", "ro");
+    trie_put(&ans->lookup, "russian", "ru");
+    trie_put(&ans->lookup, "sanskrit", "sa");
+    trie_put(&ans->lookup, "serb", "sr");
+    trie_put(&ans->lookup, "serbo_croa", "sh"); // or bs, hr, sr, cnr
+    trie_put(&ans->lookup, "slovak", "sk");
+    trie_put(&ans->lookup, "slovene", "sl");
+    trie_put(&ans->lookup, "spanish", "es");
+    trie_put(&ans->lookup, "swedish", "sv");
+    trie_put(&ans->lookup, "tagalog", "tl");
+    trie_put(&ans->lookup, "tamil", "ta");
+    trie_put(&ans->lookup, "telugu", "te");
+    trie_put(&ans->lookup, "thai", "th");
+    trie_put(&ans->lookup, "tibetan", "bo");
+    trie_put(&ans->lookup, "turkish", "tr");
+    trie_put(&ans->lookup, "ukrainian", "uk");
+    trie_put(&ans->lookup, "urdu", "ur");
+    trie_put(&ans->lookup, "vietnamese", "vi");
+    trie_put(&ans->lookup, "wendic", "wen");
+    trie_put(&ans->lookup, "yiddish", "yi");
     return ans;
 }
 void ged_langtagstate_freer(void *state) { 
