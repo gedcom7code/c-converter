@@ -16,7 +16,7 @@ Current status:
     - [x] Limit character set of cross-reference identifiers
     - [x] Fix `@` usage
     - [x] Convert `LANG` payloads to BCP 47 tags, using [FHISO's mapping](https://github.com/fhiso/legacy-format/blob/master/languages.tsv)
-    - [x] Covert `DATE`
+    - [x] Convert `DATE`
         - [x] replace date_phrase with `PHRASE` structure
         - [x] replace calendar escapes with calendar tags
         - [x] change `BC` and `B.C.` to `BCE` and remove if found in unsupported calendars
@@ -84,7 +84,7 @@ The code is designed to be thread-safe (no mutable globals or `static` locals) t
 
 The code is currently first-draft status by someone who usually does not write large code bases others read.
 It has inconsistent naming (e.g., `ged_destroy_event` vs `changePayloadToDynamic`),
-some shortcuts (e.g. some `struct`s are allocated as `long`s and cast to `struct`),
+some shortcuts (e.g., some `struct`s are allocated as `long`s and cast to `struct`),
 inconsistent style (e.g., three different ways to emit locally-created `GedEvent`s),
 etc.
 In some places some energy was spent making it efficient, in other places it is definitely *not* as efficient as it easily could be.

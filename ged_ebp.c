@@ -203,7 +203,7 @@ void ged551to700(FILE *from, FILE *to) {
 
 
 /*
- * To do: make a simpler event chainining without recursion as follows:
+ * To do: make a simpler event chaining without recursion as follows:
  * Each processor is a function that accepts an event and calls an emit
  * callback for each new event in order.
  * The driver maintains a queue?/stack? of events
