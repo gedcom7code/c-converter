@@ -20,10 +20,29 @@
  */
 
 #include <stdlib.h>
+// As explained at https://en.cppreference.com/w/c/experimental/dynamic/strndup
+// the following defines before string.h are required to use strndup.
+#ifdef __STDC_ALLOC_LIB__
+#define __STDC_WANT_LIB_EXT2__ 1
+#else
+#define _POSIX_C_SOURCE 200809L
+#endif
 #include <string.h>
 #include <ctype.h>
 
 #include "../strtrie.h"
+
+#ifdef _MSC_VER
+// The MSVC compiler does not provide strndup support.
+char* strndup(const char* str, size_t size)
+{
+    char* result = strdup(str);
+    if (result && (size < strlen(result))) {
+        result[size] = 0;
+    }
+    return result;
+}
+#endif
 
 enum ged_addschma_flags {
     GED_ADDSCHMA_IN_HEAD = 1,
