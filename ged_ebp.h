@@ -42,7 +42,7 @@ typedef enum {
      */
     GED_ANCHOR,
     /**
-     * `GED_POINTER` is a pointer-type payload. It's `data` is the
+     * `GED_POINTER` is a pointer-type payload. Its `data` is the
      * cross-reference identifier of the pointed-two structure, which
      * is defined by a `GED_ANCHOR` either before or after this event.
      */
@@ -59,7 +59,7 @@ typedef enum {
      */
     GED_LINEBREAK,
     /**
-     * `GED_EOF` indicates the end of a transmission
+     * `GED_EOF` indicates the end of a transmission.
      */
     GED_EOF,
     /**
@@ -68,7 +68,7 @@ typedef enum {
      */
     GED_RECORD,
     /**
-     * `GED_ERROR` indicates an error occurred; see data for message
+     * `GED_ERROR` indicates an error occurred; see data for message.
      */
     GED_ERROR,
 } GedEventType;
