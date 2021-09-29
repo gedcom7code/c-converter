@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\pipeline">
+      <UniqueIdentifier>{013bb19c-8b98-4651-9b80-312d0eef2075}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ansel2utf8.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commandline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ged_ebp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ged_ebp_emit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ged_ebp_parse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gedage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="geddate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="strtrie.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\addschma.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\agefix.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\alia2aka.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\datefix.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\discard.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\enums.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\event2record.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\exid.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\filenames.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\fixid.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\langtag.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\mediatype.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\mergepayload.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\names.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\nop.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\note2snote.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\noter2s.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\objes2r.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\record2event.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rela2role.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\rename.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\sours2r.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\tagcase.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\tran.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\unconc.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline\version.c">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ansel2utf8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ged_ebp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ged_ebp_emit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ged_ebp_parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gedage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="geddate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="strtrie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline\config.h">
+      <Filter>Source Files\pipeline</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

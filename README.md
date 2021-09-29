@@ -68,12 +68,21 @@ Current status:
 
 # Usage
 
+## Building using the Makefile
+
 Edit `Makefile` as needed; likely changes include
 
 - Change from `CC := clang` to your C compiler
 - If on Windows, change the target from `ged5to7` to `ged5to7.exe`
 
 Then run `make`.
+
+## Building using Visual Studio
+
+To instead build using Visual Studio, simply open the c-converter.sln
+file with Visual Studio and build the solution normally.
+
+## Running
 
 To run, execute the resulting `ged5to7`.
 Run `ged5to7 --help` for a list of command-line options.

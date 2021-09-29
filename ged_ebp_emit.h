@@ -10,7 +10,11 @@
 #include <stdio.h>  // FILE
 #include "ged_ebp.h"
 
+#ifdef _WIN32
+#define GED_ENDL "\r\n"
+#else
 #define GED_ENDL "\n"
+#endif
 
 /**
  * GedEventSink -- the last step in a filter chain.
