@@ -69,7 +69,7 @@ struct ged_event_stage_stack {
 
 
 void _show_stack_entry(const struct ged_event_stage *entry) {
-    fprintf(stderr, "%lu ", entry->stage);
+    fprintf(stderr, "%zu ", entry->stage);
     _show_event(&entry->event);
 }
 void _show_stack(const struct ged_event_stage_stack *stack) {

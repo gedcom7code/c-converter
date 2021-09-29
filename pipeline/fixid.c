@@ -45,7 +45,7 @@ void ged_fixid(GedEvent *event, GedEmitterTemplate *emitter, void *rawstate) {
         if (!val) {
             int n = ged_fixid_digitsneeded(state->length+1);
             val = malloc(n+2);
-            snprintf(val, n+2, "X%lu", state->length+1);
+            snprintf(val, n+2, "X%zu", state->length+1);
             trie_put(state, event->data, val);
             event->flags &= ~GED_OWNS_DATA;
         }
@@ -60,7 +60,7 @@ void ged_fixid(GedEvent *event, GedEmitterTemplate *emitter, void *rawstate) {
 }
 
 void *ged_fixidstate_maker() { 
-    trie *ans = calloc(1, sizeof(ans));
+    trie *ans = calloc(1, sizeof(trie));
     return ans;
 }
 void ged_fixidstate_freer(void *state) { 
