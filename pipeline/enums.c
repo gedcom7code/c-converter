@@ -148,6 +148,7 @@ void ged_enums(GedEvent *event, GedEmitterTemplate *emitter, void *rawstate) {
         }
     }
     if (event->type == GED_END) {
+        if (state->nesting == 0) state->inside = GED_ENUM_OTHER;
         if (state->extnest > 0) state->extnest -= 1;
         if (state->nesting > 0) state->nesting -= 1;
         if (state->inside == GED_ENUM_FAMC_STAT) state->inside = GED_ENUM_FAMC;
