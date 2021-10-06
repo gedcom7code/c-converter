@@ -117,6 +117,36 @@ GedDateToken gedDateNextToken(char **s) {
     return ans;
 }
 
+int gedDateDualYear(int* year, char **s) {
+    int modulus = 1;
+    int replacement = 0;
+    while('0' <= **s && **s <= '9') {
+        modulus *= 10;
+        replacement *= 10;
+        replacement += **s - '0';
+        *s += 1;
+    }
+
+    if (modulus == 1) return 0;
+    if (modulus > *year) {
+        *year = replacement;
+        return 1; // if something like 2/9 just use 9
+    }
+
+    int old = *year % modulus;
+    if (old > replacement) { // 1999/02 or 1999/97
+        if ((old - replacement)*2 <= modulus) // 1999/97
+            *year += replacement - old;
+        else // 1999/02
+            *year += replacement - old + modulus;
+    } else { // 2001/99 or 2001/03
+        if ((replacement - old)*2 <= modulus) // 2001/03
+            *year += remainder - old;
+        else // 2001/99
+            *year += replacement - old - modulus;
+    }
+    return 1;
+}
 
 
 GedDateValue *gedDateParse551(char *payload) {
