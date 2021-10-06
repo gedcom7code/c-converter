@@ -117,6 +117,36 @@ GedDateToken gedDateNextToken(char **s) {
     return ans;
 }
 
+int gedDateDualYear(int* year, char **s) {
+    int modulus = 1;
+    int replacement = 0;
+    while('0' <= **s && **s <= '9') {
+        modulus *= 10;
+        replacement *= 10;
+        replacement += **s - '0';
+        *s += 1;
+    }
+
+    if (modulus == 1) return 0;
+    if (modulus > *year) {
+        *year = replacement;
+        return 1; // if something like 2/9 just use 9
+    }
+
+    int old = *year % modulus;
+    if (old > replacement) { // 1999/02 or 1999/97
+        if ((old - replacement)*2 <= modulus) // 1999/97
+            *year += replacement - old;
+        else // 1999/02
+            *year += replacement - old + modulus;
+    } else { // 2001/99 or 2001/03
+        if ((replacement - old)*2 <= modulus) // 2001/03
+            *year += replacement - old;
+        else // 2001/99
+            *year += replacement - old - modulus;
+    }
+    return 1;
+}
 
 
 GedDateValue *gedDateParse551(char *payload) {
@@ -132,12 +162,6 @@ GedDateValue *gedDateParse551(char *payload) {
 #define GED_DATE_COPY_AS_PHRASE if (copy) { \
     ans->phrase = copy; \
     copy = 0; \
-}
-
-#define GED_DATE_EAT_SLASH if (tok.type == GED_DATE_SLASH) { \
-    tok = gedDateNextToken(&p);\
-    tok = gedDateNextToken(&p);\
-    GED_DATE_COPY_AS_PHRASE \
 }
     
     // option "n DATE (text)"
@@ -166,7 +190,12 @@ GedDateValue *gedDateParse551(char *payload) {
     if (tok.type == GED_DATE_GREGMONTH) { // month + year
         ans->d1->month = tok.token;
         tok = gedDateNextToken(&p);
-        GED_DATE_EAT_SLASH
+        if (tok.type == GED_DATE_SLASH) { // given JAN/FEB use FEB
+            GED_DATE_COPY_AS_PHRASE
+            tok = gedDateNextToken(&p);
+            ans->d1->month = tok.token;
+            tok = gedDateNextToken(&p);
+        }
     }
     if (tok.type == GED_DATE_NUMBER) { // year (or day)
         ans->d1->year = tok.number;
@@ -200,7 +229,11 @@ GedDateValue *gedDateParse551(char *payload) {
             }
             // end special case
         } else {
-            GED_DATE_EAT_SLASH
+            if (tok.type == GED_DATE_SLASH) {
+                GED_DATE_COPY_AS_PHRASE
+                if (!gedDateDualYear(&ans->d1->year, &p)) tok = gedDateNextToken(&p);
+                tok = gedDateNextToken(&p);
+            }
         }
     }
     if (!ans->d1->month && ( // month
@@ -211,13 +244,22 @@ GedDateValue *gedDateParse551(char *payload) {
         ans->d1->year = 0;
         ans->d1->month = tok.token;
         tok = gedDateNextToken(&p);
-        GED_DATE_EAT_SLASH
+        if (tok.type == GED_DATE_SLASH) { // given JAN/FEB use FEB
+            GED_DATE_COPY_AS_PHRASE
+            tok = gedDateNextToken(&p);
+            ans->d1->month = tok.token;
+            tok = gedDateNextToken(&p);
+        }
     }
     if (ans->d1->month && !ans->d1->year) {
         if (tok.type == GED_DATE_NUMBER) { // year
             ans->d1->year = tok.number;
             tok = gedDateNextToken(&p);
-            GED_DATE_EAT_SLASH
+            if (tok.type == GED_DATE_SLASH) {
+                GED_DATE_COPY_AS_PHRASE
+                if (!gedDateDualYear(&ans->d1->year, &p)) tok = gedDateNextToken(&p);
+                tok = gedDateNextToken(&p);
+            }
         } else { // or error (month without year illegal)
             free(ans->d1); ans->d1 = 0;
             ans->modifier = 0;
@@ -287,12 +329,21 @@ GedDateValue *gedDateParse551(char *payload) {
     if (tok.type == GED_DATE_GREGMONTH) { // month + year
         ans->d2->month = tok.token;
         tok = gedDateNextToken(&p);
-        GED_DATE_EAT_SLASH
+        if (tok.type == GED_DATE_SLASH) { // given JAN/FEB use FEB
+            GED_DATE_COPY_AS_PHRASE
+            tok = gedDateNextToken(&p);
+            ans->d2->month = tok.token;
+            tok = gedDateNextToken(&p);
+        }
     }
     if (tok.type == GED_DATE_NUMBER) { // year (or day)
         ans->d2->year = tok.number;
         tok = gedDateNextToken(&p);
-        GED_DATE_EAT_SLASH
+        if (tok.type == GED_DATE_SLASH) { // given 1989/0 use 1990
+            GED_DATE_COPY_AS_PHRASE
+            if (!gedDateDualYear(&ans->d2->year, &p)) tok = gedDateNextToken(&p);
+            tok = gedDateNextToken(&p);
+        }
     }
     if (!ans->d2->month && ( // month
         tok.type == GED_DATE_GREGMONTH
@@ -302,13 +353,22 @@ GedDateValue *gedDateParse551(char *payload) {
         ans->d2->year = 0;
         ans->d2->month = tok.token;
         tok = gedDateNextToken(&p);
-        GED_DATE_EAT_SLASH
+        if (tok.type == GED_DATE_SLASH) { // given JAN/FEB use FEB
+            GED_DATE_COPY_AS_PHRASE
+            tok = gedDateNextToken(&p);
+            ans->d2->month = tok.token;
+            tok = gedDateNextToken(&p);
+        }
     }
     if (ans->d2->month && !ans->d2->year) {
         if (tok.type == GED_DATE_NUMBER) { // year
             ans->d2->year = tok.number;
             tok = gedDateNextToken(&p);
-            GED_DATE_EAT_SLASH
+            if (tok.type == GED_DATE_SLASH) { // given 1989/0 use 1990
+                GED_DATE_COPY_AS_PHRASE
+                if (!gedDateDualYear(&ans->d2->year, &p)) tok = gedDateNextToken(&p);
+                tok = gedDateNextToken(&p);
+            }
         } else { // or error (month without year illegal)
             free(ans->d2); ans->d2 = 0;
             GED_DATE_COPY_AS_PHRASE
@@ -326,8 +386,6 @@ GedDateValue *gedDateParse551(char *payload) {
         GED_DATE_COPY_AS_PHRASE
         return ans;
     }
-    
-#undef GED_DATE_EAT_SLASH
 
     if (copy) free(copy);
     return ans;
